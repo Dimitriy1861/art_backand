@@ -24,14 +24,14 @@ class DataBase{
         $stmt->execute(['displayName' => $displayName]); // Выполнение запроса с подстановкой значения
         return $stmt->fetch(); // Получаем одну строку
     }
-    public function register($displayName, $password){
+    public function register($displayName, $password, $login){
         $tmt = $this->pdo->prepare("INSERT INTO `users` (`displayName`, `password_hash`, `role`, `name`)
                                 VALUES (:displayName, :password_hash, :role, :name)");
   $result=$tmt->execute([
             'displayName' => $displayName,
             'password_hash' => password_hash($password, PASSWORD_BCRYPT),
             'role' => "gost",    // Здесь передаем строку "gost"
-            'name' => "name"     // Здесь передаем строку "name"
+            'name' => $login     // Здесь передаем строку "name"
         ]);
   return $result;
     }
