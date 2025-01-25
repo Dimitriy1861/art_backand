@@ -17,8 +17,6 @@ function loginIn($displayName, $password) {
     $passwordForDB = $_ENV['DB_PASS'];
     $database = new DataBase($host, $nameDB, $passwordForDB, $dbname);
     $displayNameBD=$database->getParametr($displayName, 'users');
-    print_r($displayNameBD);
-    print_r($password);
     $verify= password_verify($password, $displayNameBD["password_hash"]);
     if ($verify){
         $expireTimeForRefresh=60;

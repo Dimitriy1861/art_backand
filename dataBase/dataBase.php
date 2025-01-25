@@ -29,7 +29,7 @@ class DataBase{
                                 VALUES (:displayName, :password_hash, :role, :name)");
   $result=$tmt->execute([
             'displayName' => $displayName,
-            'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+            'password_hash' => password_hash($password, PASSWORD_BCRYPT),
             'role' => "gost",    // Здесь передаем строку "gost"
             'name' => "name"     // Здесь передаем строку "name"
         ]);

@@ -15,8 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $displayName = $_POST["displayName"];
     $password = $_POST["password"];
     $data = $database->getParametr($displayName, 'users');
-    print $displayName;
-    print_r($data);
     if ($displayName && $password) {
         if ($data['displayName'] !== $displayName) {
             if ($database->register($displayName, $password)) {
