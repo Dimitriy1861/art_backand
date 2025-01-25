@@ -10,20 +10,20 @@ $accessSecretKey=$_ENV['JWT_ACCESS_SECRET_KEY'];
 $refreshSecretKey=$_ENV['JWT_REFRESH_SECRET_KEY'];
 
 
-function loginIn($displayName, $password) {
+function loginIn($email, $password) {
     $host = $_ENV['HOST_BASE']; // Или IP сервера БД
     $dbname = $_ENV['DB_NAME'];
     $nameDB = $_ENV['DB_USER'];
     $passwordForDB = $_ENV['DB_PASS'];
     $database = new DataBase($host, $nameDB, $passwordForDB, $dbname);
-    $displayNameBD=$database->getParametr($displayName, 'users');
-    $verify= password_verify($password, $displayNameBD["password_hash"]);
+    $emailBD=$database->getParametr($email, 'users');
+    $verify= password_verify($password, $emailBD["password_hash"]);
     if ($verify){
         $expireTimeForRefresh=60;
         $expireTimeForAccess=604800;
         $data=[
-            'displayName'=>$displayName,
-            'role'=>$displayNameBD["role"],
+            'email'=>$email,
+            'role'=>$emailBD["role"],
             ];
         $refreshToken=createJwt($data, $expireTimeForRefresh, 'refresh');
         $accessToken=createJwt($refreshToken, $expireTimeForAccess, 'access');

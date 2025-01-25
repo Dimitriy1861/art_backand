@@ -18,17 +18,17 @@ class DataBase{
         $stmt = $this->pdo->query("SELECT * FROM $tableName");
         return $stmt->fetchAll(); // Возвращаем массив данных
     }
-    public function getParametr($displayName, $tableName){
+    public function getParametr($email, $tableName){
         $table = $this->getTable($tableName);
-        $stmt = $this->pdo->prepare("SELECT * FROM $tableName WHERE displayName = :displayName"); // Подготовка запроса
-        $stmt->execute(['displayName' => $displayName]); // Выполнение запроса с подстановкой значения
+        $stmt = $this->pdo->prepare("SELECT * FROM $tableName WHERE email = :email"); // Подготовка запроса
+        $stmt->execute(['email' => $email]); // Выполнение запроса с подстановкой значения
         return $stmt->fetch(); // Получаем одну строку
     }
-    public function register($displayName, $password, $login){
-        $tmt = $this->pdo->prepare("INSERT INTO `users` (`displayName`, `password_hash`, `role`, `name`)
-                                VALUES (:displayName, :password_hash, :role, :name)");
+    public function register($email, $password, $login){
+        $tmt = $this->pdo->prepare("INSERT INTO `users` (`email`, `password_hash`, `role`, `name`)
+                                VALUES (:email, :password_hash, :role, :name)");
   $result=$tmt->execute([
-            'displayName' => $displayName,
+            'email' => $email,
             'password_hash' => password_hash($password, PASSWORD_BCRYPT),
             'role' => "gost",    // Здесь передаем строку "gost"
             'name' => $login     // Здесь передаем строку "name"

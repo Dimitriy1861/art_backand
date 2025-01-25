@@ -18,7 +18,7 @@ $username = $_ENV['DB_USER'];
 $password = $_ENV['DB_PASS'];
 $secretKey = $_ENV['SECRET_KEY'];
 
-$result= createJwt(['displayName'=>'admin', 'role'=>'admin'], 600, 'refresh');
+$result= createJwt(['email'=>'admin', 'role'=>'admin'], 600, 'refresh');
 echo $result;
 exit();
 ?>

@@ -12,14 +12,14 @@ $database = $_ENV['DB_NAME'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $database = new Database($host, $usernameDB, $passwordDB, $database);
-    $displayName = $_POST["displayName"];
+    $email = $_POST["email"];
     $password = $_POST["password"];
     $login=$_POST['login'];
-    $data = $database->getParametr($displayName, 'users');
-    if ($displayName && $password) {
-        if ($data['displayName'] !== $displayName) {
-            if ($database->register($displayName, $password, $login)) {
-                echo json_encode(loginIn($displayName, $password), JSON_UNESCAPED_UNICODE);
+    $data = $database->getParametr($email, 'users');
+    if ($email && $password) {
+        if ($data['email'] !== $email) {
+            if ($database->register($email, $password, $login)) {
+                echo json_encode(loginIn($email, $password), JSON_UNESCAPED_UNICODE);
             } else {
                 echo json_encode([
                     "status" => false,
