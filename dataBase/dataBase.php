@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class DataBase{
     private $pdo;
@@ -24,6 +25,20 @@ class DataBase{
         $stmt->execute(['email' => $email]); // Выполнение запроса с подстановкой значения
         return $stmt->fetch(); // Получаем одну строку
     }
+    public function setFiles($data){
+        extract($data);
+        $tmt=$this->pdo->prepare("INSERT INTO `picters` (path_to_picter, name, description, ranger)
+VALUES (:path_to_picter, :name, :description, :ranger)");
+
+        $result=$tmt->execute([
+            'path_to_picter' => $path,
+            'name' => $name,
+            'description' => $description,
+            'ranger' => $ranger
+        ]);
+        return $result;
+
+}
     public function register($email, $password, $login){
         $tmt = $this->pdo->prepare("INSERT INTO `users` (`email`, `password_hash`, `role`, `name`)
                                 VALUES (:email, :password_hash, :role, :name)");
