@@ -55,12 +55,11 @@ function setToBD($path, $fileName)
 
 {
     $description = $_POST["description"];
-    $ranger = $_POST["ranger"];
     $data = [
         "path" => $path,
         "name" => $fileName,
         "description" => $description,
-        "ranger" => $ranger
+        "ranger" => 'without ranger'
     ];
     $host = $_ENV['HOST_BASE']; // Или IP сервера БД
     $dbname = $_ENV['DB_NAME'];
