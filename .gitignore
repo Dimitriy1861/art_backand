@@ -2,3 +2,4 @@ dist/
 vendor/
 /pictures/*
 !/pictures/.gitkeep
+.idea

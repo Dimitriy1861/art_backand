@@ -17,22 +17,36 @@ function loginIn($email, $password) {
     $passwordForDB = $_ENV['DB_PASS'];
     $database = new DataBase($host, $nameDB, $passwordForDB, $dbname);
     $emailBD=$database->getParametr($email, 'users');
-    $verify= password_verify($password, $emailBD["password_hash"]);
-    if ($verify){
-        $expireTimeForRefresh=60;
-        $expireTimeForAccess=604800;
-        $data=[
-            'email'=>$email,
-            'role'=>$emailBD["role"],
+    if ($emailBD&&$emailBD["password_hash"]) {
+        $verify= password_verify($password, $emailBD["password_hash"]);
+        if ($verify){
+            $expireTimeForRefresh=60;
+            $expireTimeForAccess=604800;
+            $data=[
+                'email'=>$email,
+                'role'=>$emailBD["role"],
+                ];
+            $refreshToken=createJwt($data, $expireTimeForRefresh, 'refresh');
+            $accessToken=createJwt($refreshToken, $expireTimeForAccess, 'access');
+            return [
+                'status'=>'seccusses',
+                'accessToken'=>$accessToken,
+                'refreshToken'=>$refreshToken,
+                'role'=>$data['role'],
             ];
-        $refreshToken=createJwt($data, $expireTimeForRefresh, 'refresh');
-        $accessToken=createJwt($refreshToken, $expireTimeForAccess, 'access');
-        return [
-            'accessToken'=>$accessToken,
-            'refreshToken'=>$refreshToken,
-        ];
+        } else {
+
+            return [
+            'status'=> 'error',
+            'message'=> 'login failed ok',
+            ];
+        }
     } else {
-        return 'login failed';
+      return [
+               'status'=> 'error',
+               'message'=> 'login failed ok',
+               ];
     }
+
 }
 ?>

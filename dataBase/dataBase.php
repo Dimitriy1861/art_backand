@@ -67,13 +67,13 @@ class DataBase
 
     public function register($email, $password, $login)
     {
-        $tmt = $this->pdo->prepare("INSERT INTO `users` (`email`, `password_hash`, `role`, `name`)
-    VALUES (:email, :password_hash, :role, :name)");
+        $tmt = $this->pdo->prepare("INSERT INTO `users` (`email`, `password_hash`, `role`, `login`)
+    VALUES (:email, :password_hash, :role, :login)");
         $result = $tmt->execute([
             'email' => $email,
             'password_hash' => password_hash($password, PASSWORD_BCRYPT),
             'role' => "gost",    // Здесь передаем строку "gost"
-            'name' => $login     // Здесь передаем строку "name"
+            'login' => $login     // Здесь передаем строку "name"
         ]);
         return $result;
     }

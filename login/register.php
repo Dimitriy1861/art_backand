@@ -17,7 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login=$_POST['login'];
     $data = $database->getParametr($email, 'users');
     if ($email && $password) {
-        if ($data['email'] !== $email) {
+    if (!$data) {
+    print_r ('data not');
+    }
+
+        if (!$data) {
             if ($database->register($email, $password, $login)) {
                 echo json_encode(loginIn($email, $password), JSON_UNESCAPED_UNICODE);
             } else {
