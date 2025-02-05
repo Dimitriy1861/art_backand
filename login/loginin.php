@@ -27,18 +27,17 @@ function loginIn($email, $password) {
                 'role'=>$emailBD["role"],
                 ];
             $refreshToken=createJwt($data, $expireTimeForRefresh, 'refresh');
-            $accessToken=createJwt($refreshToken, $expireTimeForAccess, 'access');
+            $accessToken=createJwt($data, $expireTimeForAccess, 'access');
             return [
-                'status'=>'seccusses',
+                'status'=>'success',
                 'accessToken'=>$accessToken,
                 'refreshToken'=>$refreshToken,
                 'role'=>$data['role'],
             ];
         } else {
-
             return [
             'status'=> 'error',
-            'message'=> 'login failed ok',
+            'message'=> 'Проверьте электронную почту и пароль',
             ];
         }
     } else {

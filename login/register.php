@@ -17,13 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login=$_POST['login'];
     $data = $database->getParametr($email, 'users');
     if ($email && $password) {
-    if (!$data) {
-    print_r ('data not');
-    }
-
-        if (!$data) {
+        if (!$data['email']) {
+            header('Content-Type: application/json; charset=utf-8');
             if ($database->register($email, $password, $login)) {
-                echo json_encode(loginIn($email, $password), JSON_UNESCAPED_UNICODE);
+                $result =loginIn($email, $password);
+                echo json_encode($result, JSON_UNESCAPED_UNICODE);
             } else {
                 echo json_encode([
                     "status" => false,
@@ -33,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }else {
             echo json_encode([
                 "status" => false,
-                "message" => "Пользователь с таким логином существует",
+                "message" => "Пользователь с такой почтой существует",
             ], JSON_UNESCAPED_UNICODE);
         }
     } else {
-        echo json_encode('Ввидете имя и пароль', JSON_UNESCAPED_UNICODE);
+        echo json_encode('Введите имя и пароль', JSON_UNESCAPED_UNICODE);
     }
 
 }

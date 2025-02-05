@@ -10,4 +10,3 @@ $database = new Database($host, $userDB, $passDB,  $dbname);
 
 
 echo json_encode($database->getTable('picters'));
-echo 'or';
